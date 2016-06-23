@@ -11,22 +11,25 @@ Install the module using pip
     pip install lswapi
 
 
-## Generating a public/private keypair
-
-Make sure you add a strong password to your SSH key!
-
-    ssh-keygen -t rsa -b 4096 -C "test@example.com" -f id_rsa
-    openssl rsa -in  id_rsa -pubout > id_rsa.pub.pem
-    rm id_rsa.pub
-
-Copy the content of id_rsa.pub.pem to the 'Public RSA Key'-field your [SSC API
-page](https://secure.leaseweb.nl/en/sscApi). Click 'Show API key' for your API
-key. Keep your id_rsa file private.
-
-
 ## Usage
 
-TODO
+The `lswapi.get_leaseweb_api` function creates an instance of the LeaseWeb Api
+object with the `X-Lsw-Auth` key set based on the environment variable
+`LSW_API_KEY`:
+
+    >>> import lswapi
+    >>> client = lswapi.get_leaseweb_api()
+    >>> client.get("/v1/bareMetals")
+
+
+You can also create an instance manually in the following way:
+
+    >>> from lswapi import LeasewebLegacyAuth
+    >>> client = LeasewebLegacyAuth("xx-xx-xx-xx")
+    >>> client.get("/v1/bareMetals")
+
+
+Where `xx-xx-xx-xx` is the API key of your account.
 
 
 ## Contribute
