@@ -1,10 +1,13 @@
 __version__ = '0.1.0'
+__auth_token_url__ = 'https://auth.leaseweb.com/token'
+__api_base_url__ = 'https://api.leaseweb.com'
+__token_store__ = '/tmp/lswapi.token'
 
 from requests.auth import AuthBase
 from requests import Session
 from requests import post
 
-def get_leaseweb_api(base_url='https://api.leaseweb.com'):
+def get_leaseweb_api(base_url=__api_base_url__):
     from os import environ
     if 'LSW_API_KEY' in environ:
         api = LeaseWebSession(base_url=base_url)
@@ -29,7 +32,7 @@ class LeasewebLegacyAuth(AuthBase):
 class LeaseWebSession(Session):
     access_token = None
 
-    def __init__(self, client_id=None, client_secret=None, token_url='https://auth.leaseweb.com/token', base_url='https://api.leaseweb.com'):
+    def __init__(self, client_id=None, client_secret=None, token_url=__auth_token_url__, base_url=__api_base_url__):
         self.base_url = base_url
         self.token_url = token_url
         self.client_id = client_id

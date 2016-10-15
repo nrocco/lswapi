@@ -11,6 +11,11 @@ setup(
     author_email='n.dirocco@tech.leaseweb.com',
     url='http://developer.leaseweb.com',
     packages=find_packages(),
+    entry_points={
+        'httpie.plugins.auth.v1': [
+            'httpie_lswapi = lswapi.httpie.plugins:ApiAuthPlugin'
+        ]
+    },
     install_requires=[
         "requests"
     ],
