@@ -13,7 +13,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'httpie.plugins.auth.v1': [
-            'httpie_lswapi = lswapi.httpie.plugins:ApiAuthPlugin'
+            'httpie_lswapi = lswapi.httpie:ApiAuthPlugin'
         ]
     },
     install_requires=[
