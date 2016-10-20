@@ -1,38 +1,43 @@
-lswapi
-======
+lswapi (beta)
+=============
 
-python module to talk to Leaseweb's API
+python module to talk to LeaseWeb's API.
+
+For more information refer to the documentation available at
+[http://developer.leaseweb.com]
 
 
-## Installation
+Installation
+------------
 
 Install the module using pip
 
     pip install lswapi
 
 
-## Usage
+Usage
+-----
 
 The `lswapi.get_leaseweb_api` function creates an instance of the LeaseWeb Api
-object with the `X-Lsw-Auth` key set based on the environment variable
-`LSW_API_KEY`:
+object with the `X-Lsw-Auth` key. You can provide the api key as an argument
+to `get_leaseweb_api`
 
+    $ python
+    >>> import lswapi
+    >>> client = lswapi.get_leaseweb_api(api_key="xxxx-xxx-xxxxxx")
+    >>> client.get("/v1/bareMetals")
+
+
+or as an environment variable `LSW_API_KEY`:
+
+    $ LSW_API_KEY=xxxx-xxxx-xxxxx python
     >>> import lswapi
     >>> client = lswapi.get_leaseweb_api()
     >>> client.get("/v1/bareMetals")
 
 
-You can also create an instance manually in the following way:
-
-    >>> from lswapi import LeasewebLegacyAuth
-    >>> client = LeasewebLegacyAuth("xx-xx-xx-xx")
-    >>> client.get("/v1/bareMetals")
-
-
-Where `xx-xx-xx-xx` is the API key of your account.
-
-
-## Contribute
+Contribute
+----------
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
