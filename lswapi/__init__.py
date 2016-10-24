@@ -3,15 +3,15 @@ from requests.auth import AuthBase
 from requests import Session
 from requests import post
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 __auth_token_url__ = 'https://auth.leaseweb.com/token'
 __api_base_url__ = 'https://api.leaseweb.com'
 __token_store__ = path.expanduser('~/.lswapi.token')
 
 def get_leaseweb_api(api_key=None, client_id=None, client_secret=None, base_url=__api_base_url__, token_url=__auth_token_url__):
     api_key = api_key or environ.get('LSW_API_KEY')
-    client_id = api_key or environ.get('LSW_CLIENT_ID')
-    client_secret = api_key or environ.get('LSW_CLIENT_SECRET')
+    client_id = client_id or environ.get('LSW_CLIENT_ID')
+    client_secret = client_secret or environ.get('LSW_CLIENT_SECRET')
 
     if api_key:
         api = LeaseWebSession(base_url=base_url)
