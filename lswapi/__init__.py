@@ -10,8 +10,8 @@ __token_store__ = path.expanduser('~/.lswapi.token')
 
 def get_leaseweb_api(api_key=None, client_id=None, client_secret=None, base_url=__api_base_url__, token_url=__auth_token_url__):
     api_key = api_key or environ.get('LSW_API_KEY')
-    client_id = api_key or environ.get('LSW_CLIENT_ID')
-    client_secret = api_key or environ.get('LSW_CLIENT_SECRET')
+    client_id = client_id or environ.get('LSW_CLIENT_ID')
+    client_secret = client_secret or environ.get('LSW_CLIENT_SECRET')
 
     if api_key:
         api = LeaseWebSession(base_url=base_url)
