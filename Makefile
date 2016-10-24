@@ -14,7 +14,7 @@ develop: $(PY)
 	$(PY) setup.py develop
 
 install:
-	python setup.py install --prefix="$(prefix)" --root="$(DESTDIR)" --optimize=1
+	$(PY) setup.py install --prefix="$(prefix)" --root="$(DESTDIR)" --optimize=1
 
 clean:
 	find $(PACKAGE) -name '*.pyc' -exec rm -f {} +
@@ -25,11 +25,10 @@ clean:
 	rm -rf .tox *.egg dist build .coverage || true
 
 test:
-		python setup.py test
+	$(PY) setup.py test
 
-publish: clean build
-	python setup.py register
-	python setup.py upload
+publish: clean test
+	$(PY) setup.py sdist register upload
 
 bump:
 	@echo "Current $(PACKAGE) version is: $(shell sed -nE "s/^__version__ = .([^']+)./\\1/p" $(PACKAGE)/__init__.py)"
