@@ -35,6 +35,7 @@ deps: $(PY)
 
 .PHONY: test
 test: $(PY)
+	$(PIP) install httpie
 	$(PY) setup.py test
 
 
