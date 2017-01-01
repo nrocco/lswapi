@@ -3,7 +3,7 @@ from requests.auth import AuthBase
 from requests import Session
 from requests import post
 
-__version__ = '0.3.2'
+__version__ = '0.3.3'
 __auth_token_url__ = 'https://auth.leaseweb.com/token'
 __api_base_url__ = 'https://api.leaseweb.com'
 __token_store__ = path.expanduser('~/.lswapi.token')
