@@ -37,5 +37,5 @@ class ApiAuthPlugin(AuthPlugin):
     auth_type = 'lswapi'
     description = 'LeaseWeb Api Oauth Authentication'
 
-    def get_auth(self, client_id, client_secret):
-        return LswApiAuth(client_id, client_secret)
+    def get_auth(self, username, password):
+        return LswApiAuth(username, password)
