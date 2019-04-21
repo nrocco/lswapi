@@ -28,7 +28,8 @@ to `get_leaseweb_api`::
     $ python
     >>> import lswapi
     >>> client = lswapi.get_leaseweb_api(api_key="xxxx-xxx-xxxxxx")
-    >>> client.get("/v1/bareMetals")
+    >>> response = client.get("/bareMetals/v2/servers")
+    >>> servers = response.json()
 
 
 or as an environment variable `LSW_API_KEY`::
@@ -36,7 +37,8 @@ or as an environment variable `LSW_API_KEY`::
     $ LSW_API_KEY=xxxx-xxxx-xxxxx python
     >>> import lswapi
     >>> client = lswapi.get_leaseweb_api()
-    >>> client.get("/v1/bareMetals")
+    >>> response = client.get("/bareMetals/v2/servers")
+    >>> servers = response.json()
 
 
 Contribute
