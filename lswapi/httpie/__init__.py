@@ -8,6 +8,7 @@ from lswapi import __auth_token_url__, __token_store__, fetch_access_token
 from requests import post
 from httpie.plugins import AuthPlugin
 
+
 class LswApiAuth(object):
     def __init__(self, client_id, client_secret):
         self.client_id = client_id
@@ -22,8 +23,6 @@ class LswApiAuth(object):
                 return r
 
         token = fetch_access_token(self.client_id, self.client_secret, __auth_token_url__)
-        token['created_at'] = time()
-        token['expires_at'] = token['created_at'] + token['expires_in']
 
         with open(__token_store__, 'w') as file:
             file.write(dumps(token))

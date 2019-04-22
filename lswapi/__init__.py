@@ -27,6 +27,16 @@ def get_leaseweb_api(api_key=None, client_id=None, client_secret=None, base_url=
     raise Exception("No authentication method specified")
 
 
+def fetch_access_token(token_url, client_id, client_secret):
+    response = post(token_url, auth=(client_id, client_secret), data = {'grant_type': 'client_credentials'})
+    if response.status_code != 200:
+        raise Exception('Could not obtain an access token')
+    token = response.json()
+    token['created_at'] = int(time())
+    token['expires_at'] = token['created_at'] + token['expires_in'] - 10
+    return token
+
+
 class LeasewebApiKeyAuth(AuthBase):
     def __init__(self, lsw_auth_key):
         self.lsw_auth_key = lsw_auth_key
@@ -47,14 +57,7 @@ class LeaseWebSession(Session):
         super(LeaseWebSession, self).__init__()
 
     def _fetch_access_token(self):
-        response = post(self.token_url,
-                        auth=(self.client_id, self.client_secret),
-                        data = {'grant_type': 'client_credentials'})
-        if response.status_code != 200:
-            raise Exception('Could not obtain an access token')
-        token = response.json()
-        token['expires_at'] = int(time()) + token['expires_in'] - 10
-        return token
+        return fetch_access_token(self.token_url, self.client_id, self.client_secret)
 
     def request(self, method, url, data=None, headers={}, **kwargs):
         if self.client_id and self.client_secret:
