@@ -22,7 +22,7 @@ class LswApiAuth(object):
                 r.headers['Authorization'] = '{token_type} {access_token}'.format(**token)
                 return r
 
-        token = fetch_access_token(self.client_id, self.client_secret, __auth_token_url__)
+        token = fetch_access_token(__auth_token_url__, self.client_id, self.client_secret)
 
         with open(__token_store__, 'w') as file:
             file.write(dumps(token))
