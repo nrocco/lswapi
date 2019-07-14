@@ -4,19 +4,6 @@ import io
 import codecs
 
 from setuptools import setup, find_packages
-from setuptools.command.test import test as TestCommand
-
-
-class NoseTestCommand(TestCommand):
-    def finalize_options(self):
-        TestCommand.finalize_options(self)
-        self.test_args = []
-        self.test_suite = True
-
-    def run_tests(self):
-        # Run nose ensuring that argv simulates running nosetests directly
-        import nose
-        nose.run_exit(argv=['nosetests'])
 
 
 def load_requirements(filename):
@@ -33,13 +20,10 @@ setup(
     url = 'http://developer.leaseweb.com',
     license = 'GPLv3',
     long_description = codecs.open('README.rst', 'rb', 'utf-8').read(),
-    test_suite = 'nose.collector',
     download_url = 'https://github.com/nrocco/lswapi/tags',
     include_package_data = True,
     install_requires = load_requirements('requirements.txt'),
     tests_require = [
-        'nose',
-        'mock',
         'coverage',
     ],
     entry_points = {
@@ -47,7 +31,8 @@ setup(
             'httpie_lswapi = lswapi.httpie:ApiAuthPlugin'
         ]
     },
-    packages = find_packages(),
+    packages = find_packages(exclude=['tests']),
+    test_suite = 'tests',
     classifiers = [
         'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
@@ -65,7 +50,4 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Utilities'
     ],
-    cmdclass = {
-        'test': NoseTestCommand
-    }
 )
