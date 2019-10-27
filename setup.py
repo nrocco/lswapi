@@ -13,7 +13,7 @@ def load_requirements(filename):
 setup(
     name='lswapi',
     description='a python client library for easy leaseweb api access',
-    version='0.4.1',
+    version='0.4.2',
     author='Nico Di Rocco',
     author_email='n.dirocco@global.leaseweb.com',
     url='http://developer.leaseweb.com',
