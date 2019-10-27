@@ -1,10 +1,9 @@
 lswapi (beta)
 =============
 
-.. image:: https://travis-ci.org/nrocco/lswapi.svg?branch=master
-    :target: https://travis-ci.org/nrocco/lswapi
+[![Actions Status](https://github.com/nrocco/lswapi/workflows/Python%20package/badge.svg)](https://github.com/nrocco/lswapi/actions)
 
-python module to talk to LeaseWeb's API.
+Python module to talk to LeaseWeb's API.
 
 For more information refer to the documentation available at
 [http://developer.leaseweb.com]
@@ -13,7 +12,7 @@ For more information refer to the documentation available at
 Installation
 ------------
 
-Install the module using pip::
+Install the module using pip
 
     pip install lswapi
 
@@ -23,7 +22,7 @@ Usage
 
 The `lswapi.get_leaseweb_api` function creates an instance of the LeaseWeb Api
 object with the `X-Lsw-Auth` key. You can provide the api key as an argument
-to `get_leaseweb_api`::
+to `get_leaseweb_api`
 
     $ python
     >>> import lswapi
@@ -32,7 +31,7 @@ to `get_leaseweb_api`::
     >>> servers = response.json()
 
 
-or as an environment variable `LSW_API_KEY`::
+or as an environment variable `LSW_API_KEY`
 
     $ LSW_API_KEY=xxxx-xxxx-xxxxx python
     >>> import lswapi

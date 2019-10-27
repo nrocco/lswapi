@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import re
 import io
 import codecs
 
@@ -12,28 +11,29 @@ def load_requirements(filename):
 
 
 setup(
-    name = 'lswapi',
-    description = 'a python client library for easy leaseweb api access',
-    version = re.search(r'''^__version__\s*=\s*["'](.*)["']''', open('lswapi/__init__.py').read(), re.M).group(1),
-    author = 'Nico Di Rocco',
-    author_email = 'n.dirocco@global.leaseweb.com',
-    url = 'http://developer.leaseweb.com',
-    license = 'GPLv3',
-    long_description = codecs.open('README.rst', 'rb', 'utf-8').read(),
-    download_url = 'https://github.com/nrocco/lswapi/tags',
-    include_package_data = True,
-    install_requires = load_requirements('requirements.txt'),
-    tests_require = [
+    name='lswapi',
+    description='a python client library for easy leaseweb api access',
+    version='0.4.1',
+    author='Nico Di Rocco',
+    author_email='n.dirocco@global.leaseweb.com',
+    url='http://developer.leaseweb.com',
+    license='GPLv3',
+    long_description=codecs.open('README.md', 'rb', 'utf-8').read(),
+    download_url='https://github.com/nrocco/lswapi/tags',
+    include_package_data=True,
+    install_requires=load_requirements('requirements.txt'),
+    tests_require=[
+        'httpie',
         'coverage',
     ],
-    entry_points = {
+    entry_points={
         'httpie.plugins.auth.v1': [
             'httpie_lswapi = lswapi.httpie:ApiAuthPlugin'
         ]
     },
-    packages = find_packages(exclude=['tests']),
-    test_suite = 'tests',
-    classifiers = [
+    packages=find_packages(exclude=['tests']),
+    test_suite='tests',
+    classifiers=[
         'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Operating System :: Unix',
@@ -41,9 +41,6 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',

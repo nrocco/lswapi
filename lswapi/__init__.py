@@ -9,6 +9,7 @@ __auth_token_url__ = 'https://auth.leaseweb.com/token'
 __api_base_url__ = 'https://api.leaseweb.com'
 __token_store__ = path.expanduser('~/.lswapi.token')
 
+
 def get_leaseweb_api(api_key=None, client_id=None, client_secret=None, base_url=None, token_url=None):
     base_url = base_url or environ.get('LSW_BASE_URL', __api_base_url__)
     token_url = token_url or environ.get('LSW_AUTH_URL', __auth_token_url__)
@@ -28,7 +29,7 @@ def get_leaseweb_api(api_key=None, client_id=None, client_secret=None, base_url=
 
 
 def fetch_access_token(token_url, client_id, client_secret):
-    response = post(token_url, auth=(client_id, client_secret), data = {'grant_type': 'client_credentials'})
+    response = post(token_url, auth=(client_id, client_secret), data={'grant_type': 'client_credentials'})
     if response.status_code != 200:
         raise Exception('Could not obtain an access token')
     token = response.json()
