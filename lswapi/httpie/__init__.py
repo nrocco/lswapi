@@ -4,8 +4,11 @@ LswApi auth plugin for HTTPie.
 from json import loads, dumps
 from time import time
 from os import path
-from lswapi import __auth_token_url__, __token_store__, fetch_access_token
+from lswapi import __auth_token_url__, fetch_access_token
 from httpie.plugins import AuthPlugin
+
+
+__token_store__ = path.expanduser('~/.lswapi.token')
 
 
 class LswApiAuth(object):
