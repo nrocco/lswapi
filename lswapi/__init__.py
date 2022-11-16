@@ -6,7 +6,7 @@ from requests import Session
 from requests import post
 from time import time
 
-__version__ = '0.4.2'
+__version__ = '0.4.3'
 __auth_token_url__ = 'https://auth.leaseweb.com/token'
 __api_base_url__ = 'https://api.leaseweb.com'
 
