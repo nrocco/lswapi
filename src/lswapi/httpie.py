@@ -1,11 +1,12 @@
 """
 LswApi auth plugin for HTTPie.
 """
-from json import loads, dumps
-from time import time
-from os import path
-from lswapi import __auth_token_url__, fetch_access_token
 from httpie.plugins import AuthPlugin
+from json import loads, dumps
+from lswapi import __auth_token_url__
+from lswapi.requests import fetch_access_token
+from os import path
+from time import time
 
 
 __token_store__ = path.expanduser('~/.lswapi.token')
@@ -36,7 +37,7 @@ class LswApiAuth(object):
 class ApiAuthPlugin(AuthPlugin):
     name = 'LswApi Oauth'
     auth_type = 'lswapi'
-    description = 'LeaseWeb Api Oauth Authentication'
+    description = 'Leaseweb Api Oauth Authentication'
 
     def get_auth(self, username, password):
         return LswApiAuth(username, password)
