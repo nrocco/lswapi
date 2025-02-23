@@ -1,0 +1,5 @@
+[flake8]
+ignore = E501
+exclude = .git,.eggs,__pycache__,build,dist,env
+max-complexity = 20
+max-line-length = 1000
