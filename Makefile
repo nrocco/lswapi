@@ -9,7 +9,7 @@ clean:
 	find src tests -name '*~' -exec rm -f {} +
 	find src tests -name '._*' -exec rm -f {} +
 	find src tests -name '.coverage*' -exec rm -f {} +
-	rm -rf .tox *.egg dist build .coverage MANIFEST || true
+	rm -rf .tox .pytest_cache *.egg *.egg-info dist build htmlcov .coverage MANIFEST
 
 
 .PHONY: version

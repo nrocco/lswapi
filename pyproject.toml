@@ -62,3 +62,6 @@ version = {file = ".version"}
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.distutils.egg_info]
+egg_base = "."
