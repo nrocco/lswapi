@@ -17,8 +17,7 @@ jobs:
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install build
-          python3 -m pip install -e '.[aio,requests]'
+          python3 -m pip install --editable '.[aio,requests,develop]'
       - name: Lint with flake8
         run: |
           python3 -m flake8 src tests
