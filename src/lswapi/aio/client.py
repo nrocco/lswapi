@@ -3,20 +3,20 @@ from aiohttp import ClientSession
 
 class LeasewebHttpClient:
     def __init__(self, *args, middlewares: list[callable] = [], **kwargs):
-        self.__middlewares = middlewares
-        self.__session = ClientSession(*args, **kwargs)
+        self.middlewares = middlewares
+        self.session = ClientSession(*args, **kwargs)
 
     async def _run_middlewares(self, method, url, next_func, **kwargs):
         async def middleware_chain(index, method, url, **kwargs):
-            if index < len(self.__middlewares):
-                return await self.__middlewares[index](
+            if index < len(self.middlewares):
+                return await self.middlewares[index](
                     method, url, lambda m, u, **k: middleware_chain(index + 1, m, u, **k), **kwargs
                 )
             return await next_func(method, url, **kwargs)
         return await middleware_chain(0, method, url, **kwargs)
 
     async def _request(self, method, url, **kwargs):
-        return await self.__session.request(method, url, **kwargs)
+        return await self.session.request(method, url, **kwargs)
 
     async def request(self, method, url, **kwargs):
         return await self._run_middlewares(method, url, self._request, **kwargs)
@@ -37,7 +37,7 @@ class LeasewebHttpClient:
         return await self.request("DELETE", url, **kwargs)
 
     async def close(self):
-        await self.__session.close()
+        await self.session.close()
 
     async def __aenter__(self):
         return self
