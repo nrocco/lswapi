@@ -1,6 +1,6 @@
 [project]
 name = "lswapi"
-version = "0.5.1"
+version = "0.5.2"
 description = "a python client library for easy leaseweb api access"
 authors = [
     {name = "Nico Di Rocco",email = "n.dirocco@global.leaseweb.com"}
