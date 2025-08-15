@@ -4,7 +4,8 @@ from aiohttp import ClientSession
 class LeasewebHttpClient:
     def __init__(self, *args, middlewares: list[callable] = [], **kwargs):
         self.middlewares = middlewares
-        self.session = ClientSession(*args, **kwargs)
+        self.__create_session = lambda: ClientSession(*args, **kwargs)
+        self.session = None
 
     async def _run_middlewares(self, method, url, next_func, **kwargs):
         async def middleware_chain(index, method, url, **kwargs):
@@ -16,6 +17,8 @@ class LeasewebHttpClient:
         return await middleware_chain(0, method, url, **kwargs)
 
     async def _request(self, method, url, **kwargs):
+        if not self.session:
+            self.session = self.__create_session()
         return await self.session.request(method, url, **kwargs)
 
     async def request(self, method, url, **kwargs):
@@ -37,7 +40,8 @@ class LeasewebHttpClient:
         return await self.request("DELETE", url, **kwargs)
 
     async def close(self):
-        await self.session.close()
+        if self.session:
+            await self.session.close()
 
     async def __aenter__(self):
         return self
