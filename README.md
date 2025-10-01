@@ -67,8 +67,7 @@ to `get_leaseweb_api` or via the environment variable `LSW_API_KEY`:
     >>> servers = await response.json()
 
 
-Contribute
-----------
+## Contribute
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)

@@ -2,15 +2,11 @@
 name = "lswapi"
 dynamic = ["version"]
 description = "a python client library for easy leaseweb api access"
-readme = "README.md"
 authors = [
     { name="Nico Di Rocco", email="n.dirocco@global.leaseweb.com" },
 ]
-license = {text="Apache-2.0"}
-requires-python = ">= 3.9"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Operating System :: Unix",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3.9",
@@ -21,6 +17,10 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Utilities"
 ]
+license = "Apache-2.0"
+readme = "README.md"
+requires-python = ">= 3.9"
+dependencies = []
 
 [project.urls]
 Homepage = "http://developer.leaseweb.com"
@@ -32,6 +32,9 @@ develop = [
     "pytest",
     "pytest-cov",
     "requests-mock",
+]
+publish = [
+    "build",
     "twine",
 ]
 httpie = [
@@ -50,7 +53,7 @@ httpie_lswapi = "lswapi.httpie:ApiAuthPlugin"
 
 [build-system]
 requires = [
-    "setuptools>=64",
+    "setuptools>=80",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -62,6 +65,3 @@ version = {file = ".version"}
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-
-[tool.distutils.egg_info]
-egg_base = "."
