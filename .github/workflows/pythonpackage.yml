@@ -16,15 +16,14 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          pip install poetry
-          poetry config virtualenvs.in-project true
-          poetry install --no-interaction --no-ansi
+          python3 -m pip install --upgrade pip
+          python3 -m pip install --editable '.[aio,requests,develop,publish]'
       - name: Lint with flake8
         run: |
-          poetry run flake8 src tests
+          python3 -m flake8 src tests
       - name: Test
         run: |
-          poetry run pytest
+          python3 -m pytest -vv
       - name: Build
         run: |
-          poetry build
+          python3 -m build
