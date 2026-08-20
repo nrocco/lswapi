@@ -5,18 +5,6 @@ description = "a python client library for easy leaseweb api access"
 authors = [
     { name="Nico Di Rocco", email="n.dirocco@global.leaseweb.com" },
 ]
-classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Operating System :: Unix",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-    "Topic :: Software Development :: Libraries :: Python Modules",
-    "Topic :: Utilities"
-]
 license = "Apache-2.0"
 readme = "README.md"
 requires-python = ">= 3.9"
@@ -26,16 +14,12 @@ dependencies = []
 Homepage = "http://developer.leaseweb.com"
 Issues = "https://github.com/nrocco/lswapi"
 
-[project.optional-dependencies]
-develop = [
-    "flake8",
+[dependency-groups]
+dev = [
     "pytest",
     "pytest-cov",
     "requests-mock",
-]
-publish = [
-    "build",
-    "twine",
+    "ruff",
 ]
 httpie = [
     "httpie",
@@ -52,16 +36,24 @@ aio = [
 httpie_lswapi = "lswapi.httpie:ApiAuthPlugin"
 
 [build-system]
-requires = [
-    "setuptools>=80",
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src/",
+    "pyproject.toml",
+    "README.md",
 ]
-build-backend = "setuptools.build_meta"
 
-[tool.setuptools]
-include-package-data = true
-
-[tool.setuptools.dynamic]
-version = {file = ".version"}
+[tool.hatch.version]
+source = "vcs"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 999
+
+[tool.ruff.lint]
+ignore = ["E501"]  # E501 is the line-too-long rule

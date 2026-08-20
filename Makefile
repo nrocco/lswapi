@@ -12,29 +12,25 @@ clean:
 	rm -rf .tox .pytest_cache *.egg *.egg-info dist build htmlcov .coverage MANIFEST
 
 
-.PHONY: version
-version:
-	git describe --tags --always | sed -r -e 's/-([0-9]+)/.dev\1/' -e 's/-/+/' | tee .version
-
-
 .PHONY: lint
 lint:
-	python3 -m flake8 src tests
+	uv run ruff check src/ tests/
+	uv format --check -- src/ tests/
 
 
 .PHONY: test
 test:
-	python3 -m pytest -vv
+	uv run pytest -vv
 
 
 .PHONY: coverage
 coverage:
-	python3 -m pytest -vv --no-cov-on-fail --cov=src --cov-report=term --cov-report=html --cov-report=xml
+	uv run pytest -vv --no-cov-on-fail --cov=src --cov-report=term --cov-report=html --cov-report=xml
 
 
 .PHONY: build
 build: clean
-	python3 -m build
+	uv build
 
 
 # The default make target is ci
