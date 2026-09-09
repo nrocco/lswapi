@@ -7,20 +7,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.0.1
         with:
           python-version: '3.x'
       - name: Install dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install --editable '.[publish]'
-      - name: Build and publish
+        run: uv sync
+      - name: Build
+        run: uv build
+      - name: publish
         env:
-          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: |
-          git describe --tags --always | sed -r -e 's/-([0-9]+)/.dev\1/' -e 's/-/+/' | tee .version
-          python3 -m build
-          python3 -m twine upload dist/*
+          UV_PUBLISH_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          UV_PUBLISH_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        run: uv publish
