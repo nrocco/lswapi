@@ -7,23 +7,20 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.0.1
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install --editable '.[aio,requests,develop,publish]'
-      - name: Lint with flake8
-        run: |
-          python3 -m flake8 src tests
+        run: uv sync --extra aio --extra requests --extra dev --extra httpie
+      - name: Lint
+        run: uv run ruff check
+      - name: Format
+        run: uv format --check -- src/ tests/
       - name: Test
-        run: |
-          python3 -m pytest -vv
+        run: uv run pytest -vv
       - name: Build
-        run: |
-          python3 -m build
+        run: uv build
