@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
-        run: uv sync --extra aio --extra requests --extra dev --extra httpie
+        run: uv sync --all-groups
       - name: Lint
         run: uv run ruff check
       - name: Format
