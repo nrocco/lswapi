@@ -56,4 +56,7 @@ testpaths = ["tests"]
 line-length = 999
 
 [tool.ruff.lint]
-ignore = ["E501"]  # E501 is the line-too-long rule
+ignore = [
+    "E501",  # E501 is the line-too-long rule
+    "ASYNC230",
+]
