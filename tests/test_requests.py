@@ -4,7 +4,7 @@ from lswapi.requests import get_leaseweb_api
 
 
 def test_get_with_nothing():
-    with pytest.raises(Exception):
+    with pytest.raises(RuntimeError):
         get_leaseweb_api()
 
 

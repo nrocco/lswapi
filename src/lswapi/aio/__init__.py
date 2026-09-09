@@ -1,10 +1,9 @@
-from lswapi import __api_base_url__
-from lswapi import __auth_token_url__
+from os import environ
+
+from lswapi import __api_base_url__, __auth_token_url__
 from lswapi.aio.client import LeasewebHttpClient
 from lswapi.aio.middleware import LoggingMiddleware
-from lswapi.aio.oauth import AccessTokenFileStore
-from lswapi.aio.oauth import LeasewebOAuthMiddleware
-from os import environ
+from lswapi.aio.oauth import AccessTokenFileStore, LeasewebOAuthMiddleware
 
 
 def get_leaseweb_api(api_key=None, client_id=None, client_secret=None, base_url=None, token_url=None, token_store=None):
@@ -15,13 +14,16 @@ def get_leaseweb_api(api_key=None, client_id=None, client_secret=None, base_url=
     if api_key:
         return LeasewebHttpClient(base_url, middlewares=[LoggingMiddleware(debug=False)], headers={"X-Lsw-Auth": api_key})
     if not client_id or not client_secret:
-        raise Exception("No authentication method specified")
-    return LeasewebHttpClient(base_url, middlewares=[
-        LeasewebOAuthMiddleware(
-            client_id,
-            client_secret,
-            token_url,
-            store=AccessTokenFileStore(token_store) if token_store else None,
-        ),
-        LoggingMiddleware(debug=False),
-    ])
+        raise RuntimeError("No authentication method specified")
+    return LeasewebHttpClient(
+        base_url,
+        middlewares=[
+            LeasewebOAuthMiddleware(
+                client_id,
+                client_secret,
+                token_url,
+                store=AccessTokenFileStore(token_store) if token_store else None,
+            ),
+            LoggingMiddleware(debug=False),
+        ],
+    )

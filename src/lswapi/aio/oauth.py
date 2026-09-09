@@ -1,8 +1,9 @@
-import aiohttp
 import asyncio
 import json
 import os
 import time
+
+import aiohttp
 
 from lswapi.aio.client import LeasewebHttpClient
 from lswapi.aio.middleware import LoggingMiddleware

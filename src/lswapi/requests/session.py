@@ -1,11 +1,12 @@
-from json import load, dump
-from lswapi import __api_base_url__
-from lswapi import __auth_token_url__
-from lswapi.requests.oauth import fetch_access_token
+from json import dump, load
 from os import path
+from time import time
+
 from requests import Session
 from requests.auth import AuthBase
-from time import time
+
+from lswapi import __api_base_url__, __auth_token_url__
+from lswapi.requests.oauth import fetch_access_token
 
 
 class LeasewebApiKeyAuth(AuthBase):
@@ -29,10 +30,9 @@ class LeasewebSession(Session):
         super().__init__()
 
     def _fetch_access_token(self):
-        if not self.access_token and self.token_store:
-            if path.exists(self.token_store):
-                with open(self.token_store, "r") as file:
-                    self.access_token = load(file)
+        if not self.access_token and self.token_store and path.exists(self.token_store):
+            with open(self.token_store, "r") as file:
+                self.access_token = load(file)
         if self.access_token and self.access_token.get("expires_at") > time():
             return self.access_token
         self.access_token = fetch_access_token(self.token_url, self.client_id, self.client_secret)
@@ -41,7 +41,9 @@ class LeasewebSession(Session):
                 dump(self.access_token, file)
         return self.access_token
 
-    def request(self, method, url, data=None, headers={}, **kwargs):
+    def request(self, method, url, data=None, headers=None, **kwargs):
+        if headers is None:
+            headers = {}
         if self.client_id and self.client_secret:
             headers["Authorization"] = "{token_type} {access_token}".format(**self._fetch_access_token())
         if not url.startswith("http"):

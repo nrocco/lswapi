@@ -1,19 +1,20 @@
 """
 LswApi auth plugin for HTTPie.
 """
-from httpie.plugins import AuthPlugin
+
+from hashlib import md5
+from json import dumps, loads
+from pathlib import Path
+from time import time
+
 from httpie.cli.definition import parser as httpie_args_parser
-from json import loads, dumps
+from httpie.plugins import AuthPlugin
+
 from lswapi import __auth_token_url__
 from lswapi.requests.oauth import fetch_access_token
-from os import path
-from time import time
-from hashlib import md5
-from pathlib import Path
 
 
-
-class LswApiAuth(object):
+class LswApiAuth:
     def __init__(self, client_id, client_secret):
         if not client_id:
             raise ValueError("client_id is required")
@@ -46,9 +47,9 @@ class ApiAuthPlugin(AuthPlugin):
     auth_type = "lswapi"
     description = "Leaseweb Api Oauth Authentication"
 
-    params = httpie_args_parser.add_argument_group(title='LswApi Oauth OAuth2.0 options')
+    params = httpie_args_parser.add_argument_group(title="LswApi Oauth OAuth2.0 options")
 
-    params.add_argument('--auth-token-url', default=None, metavar='LSW_AUTH_URL', help='OAuth 2.0 Token endpoint URI')
+    params.add_argument("--auth-token-url", default=None, metavar="LSW_AUTH_URL", help="OAuth 2.0 Token endpoint URI")
 
     def get_auth(self, username, password):
         return LswApiAuth(username, password)

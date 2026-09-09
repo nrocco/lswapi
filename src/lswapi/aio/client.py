@@ -1,8 +1,12 @@
+from __future__ import annotations
+
 from aiohttp import ClientSession
 
 
 class LeasewebHttpClient:
-    def __init__(self, *args, middlewares: list[callable] = [], **kwargs):
+    def __init__(self, *args, middlewares: list[callable] | None = None, **kwargs):
+        if middlewares is None:
+            middlewares = []
         self.middlewares = middlewares
         self.__create_session = lambda: ClientSession(*args, **kwargs)
         self.session = None
@@ -10,10 +14,9 @@ class LeasewebHttpClient:
     async def _run_middlewares(self, method, url, next_func, **kwargs):
         async def middleware_chain(index, method, url, **kwargs):
             if index < len(self.middlewares):
-                return await self.middlewares[index](
-                    method, url, lambda m, u, **k: middleware_chain(index + 1, m, u, **k), **kwargs
-                )
+                return await self.middlewares[index](method, url, lambda m, u, **k: middleware_chain(index + 1, m, u, **k), **kwargs)
             return await next_func(method, url, **kwargs)
+
         return await middleware_chain(0, method, url, **kwargs)
 
     async def _request(self, method, url, **kwargs):
