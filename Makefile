@@ -15,7 +15,7 @@ clean:
 .PHONY: lint
 lint:
 	uv run ruff check src/ tests/
-	uv format --check -- src/ tests/
+	uv run ruff format --check src/ tests/
 
 
 .PHONY: test
