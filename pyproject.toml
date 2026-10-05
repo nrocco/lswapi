@@ -3,7 +3,7 @@ name = "lswapi"
 dynamic = ["version"]
 description = "a python client library for easy leaseweb api access"
 authors = [
-    { name="Nico Di Rocco", email="n.dirocco@global.leaseweb.com" },
+    { name = "Nico Di Rocco", email = "n.dirocco@global.leaseweb.com" },
 ]
 license = "Apache-2.0"
 readme = "README.md"
@@ -53,10 +53,10 @@ source = "vcs"
 testpaths = ["tests"]
 
 [tool.ruff]
-line-length = 999
+line-length = 320
 
 [tool.ruff.lint]
 ignore = [
-    "E501",  # E501 is the line-too-long rule
     "ASYNC230",
+    "E501",  # E501 is the line-too-long rule
 ]
