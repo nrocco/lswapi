@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+from collections.abc import Callable
+
 from aiohttp import ClientSession
 
 
 class LeasewebHttpClient:
-    def __init__(self, *args, middlewares: list[callable] | None = None, **kwargs):
+    def __init__(self, *args, middlewares: list[Callable] | None = None, **kwargs):
         if middlewares is None:
             middlewares = []
         self.middlewares = middlewares

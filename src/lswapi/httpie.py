@@ -51,5 +51,5 @@ class ApiAuthPlugin(AuthPlugin):
 
     params.add_argument("--auth-token-url", default=None, metavar="LSW_AUTH_URL", help="OAuth 2.0 Token endpoint URI")
 
-    def get_auth(self, username, password):
+    def get_auth(self, username=None, password=None):
         return LswApiAuth(username, password)

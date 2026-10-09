@@ -41,11 +41,11 @@ class LeasewebSession(Session):
                 dump(self.access_token, file)
         return self.access_token
 
-    def request(self, method, url, data=None, headers=None, **kwargs):
-        if headers is None:
-            headers = {}
+    def request(self, method, url, *args, **kwargs):
+        if kwargs.get("headers") is None:
+            kwargs["headers"] = {}
         if self.client_id and self.client_secret:
-            headers["Authorization"] = "{token_type} {access_token}".format(**self._fetch_access_token())
+            kwargs["headers"]["Authorization"] = "{token_type} {access_token}".format(**self._fetch_access_token())
         if not url.startswith("http"):
             url = "{}/{}".format(self.base_url, url.lstrip("/"))
-        return super().request(method, url, headers=headers, data=data, **kwargs)
+        return super().request(method, url, *args, **kwargs)
